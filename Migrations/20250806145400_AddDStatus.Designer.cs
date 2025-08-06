@@ -4,6 +4,7 @@ using CimtasHrPanel.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CimtasHrPanel.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    partial class ProjectDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250806145400_AddDStatus")]
+    partial class AddDStatus
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,15 +107,6 @@ namespace CimtasHrPanel.Migrations
                             LeaveTime = new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LeaveTypeId = 1,
                             PersonId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DurationDays = 22,
-                            EntryTime = new DateTime(2025, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LeaveTime = new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            LeaveTypeId = 1,
-                            PersonId = 2
                         });
                 });
 

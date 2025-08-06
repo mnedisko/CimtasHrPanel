@@ -8,9 +8,10 @@
 
 }
 <div class="text-center">
-    <h1 class="display-4">Welcome to Çimtaş HR Panel</h1>
-    <a class="btn btn-primary" asp-action="Index" asp-controller="Admin">Tıkla</a>
-    <a class="btn btn-primary" asp-controller="Leave" asp-action="Index">Leave</a>
+    <h1 class="display-4">Çimtaş İzin Takip Mini Paneline Hoşgeldiniz</h1>
+    <a class="btn btn-primary" asp-action="Index" asp-controller="Admin">Admin Panel</a>
+    <a class="btn btn-primary" asp-controller="Leave" asp-action="Index">İzin Geçmişi</a>
+    <a class="btn btn-primary" asp-controller="Leave" asp-action="LeaveModule">İzin Giriş Modülü</a>
     @if(!PersonList)
     {
         <form method="get">

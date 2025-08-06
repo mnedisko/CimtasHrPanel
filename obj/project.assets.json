@@ -4632,31 +4632,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\doguk\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/Users/dogukansezeruyar/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\doguk\\source\\repos\\mnedisko\\CimtasHrPanel\\CimtasHrPanel.csproj",
+      "projectUniqueName": "/Applications/ForBussines/CimtasHrPanel/CimtasHrPanel.csproj",
       "projectName": "CimtasHrPanel",
-      "projectPath": "C:\\Users\\doguk\\source\\repos\\mnedisko\\CimtasHrPanel\\CimtasHrPanel.csproj",
-      "packagesPath": "C:\\Users\\doguk\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\doguk\\source\\repos\\mnedisko\\CimtasHrPanel\\obj\\",
+      "projectPath": "/Applications/ForBussines/CimtasHrPanel/CimtasHrPanel.csproj",
+      "packagesPath": "/Users/dogukansezeruyar/.nuget/packages/",
+      "outputPath": "/Applications/ForBussines/CimtasHrPanel/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\doguk\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/dogukansezeruyar/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4675,7 +4668,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.200"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -4723,7 +4716,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CimtasHrPanel.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20250806111347_seeddata")]
-    partial class seeddata
+    [Migration("20250806163043_AddDStatusdds")]
+    partial class AddDStatusdds
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,6 +70,9 @@ namespace CimtasHrPanel.Migrations
                     b.Property<int?>("DepartmentId")
                         .HasColumnType("int");
 
+                    b.Property<int>("DurationDays")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("EntryTime")
                         .HasColumnType("datetime2");
 
@@ -82,6 +85,9 @@ namespace CimtasHrPanel.Migrations
                     b.Property<int>("PersonId")
                         .HasColumnType("int");
 
+                    b.Property<string>("status")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DepartmentId");
@@ -91,6 +97,26 @@ namespace CimtasHrPanel.Migrations
                     b.HasIndex("PersonId");
 
                     b.ToTable("LeaveRequests");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DurationDays = 7,
+                            EntryTime = new DateTime(2025, 7, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LeaveTime = new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LeaveTypeId = 1,
+                            PersonId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DurationDays = 22,
+                            EntryTime = new DateTime(2025, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LeaveTime = new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LeaveTypeId = 1,
+                            PersonId = 2
+                        });
                 });
 
             modelBuilder.Entity("CimtasHrPanel.Models.LeaveType", b =>
@@ -144,6 +170,9 @@ namespace CimtasHrPanel.Migrations
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
+                    b.Property<int>("MaxAnnualLeaveLimit")
+                        .HasColumnType("int");
+
                     b.Property<string>("PersonLastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -163,6 +192,7 @@ namespace CimtasHrPanel.Migrations
                         {
                             Id = 1,
                             DepartmentId = 1,
+                            MaxAnnualLeaveLimit = 20,
                             PersonLastName = "Yılmaz",
                             PersonName = "Ahmet"
                         },
@@ -170,6 +200,7 @@ namespace CimtasHrPanel.Migrations
                         {
                             Id = 2,
                             DepartmentId = 1,
+                            MaxAnnualLeaveLimit = 20,
                             PersonLastName = "Soy",
                             PersonName = "Büşra"
                         },
@@ -177,6 +208,7 @@ namespace CimtasHrPanel.Migrations
                         {
                             Id = 3,
                             DepartmentId = 2,
+                            MaxAnnualLeaveLimit = 20,
                             PersonLastName = "Ay",
                             PersonName = "Kadir"
                         },
@@ -184,6 +216,7 @@ namespace CimtasHrPanel.Migrations
                         {
                             Id = 4,
                             DepartmentId = 3,
+                            MaxAnnualLeaveLimit = 20,
                             PersonLastName = "Yılmaz",
                             PersonName = "Mehmet"
                         });
@@ -202,7 +235,7 @@ namespace CimtasHrPanel.Migrations
                         .IsRequired();
 
                     b.HasOne("CimtasHrPanel.Models.Person", "Person")
-                        .WithMany("LeaveRequests")
+                        .WithMany("LeaveHistory")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -232,7 +265,7 @@ namespace CimtasHrPanel.Migrations
 
             modelBuilder.Entity("CimtasHrPanel.Models.Person", b =>
                 {
-                    b.Navigation("LeaveRequests");
+                    b.Navigation("LeaveHistory");
                 });
 #pragma warning restore 612, 618
         }

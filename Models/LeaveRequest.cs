@@ -9,6 +9,10 @@ namespace CimtasHrPanel.Models
         public LeaveType LeaveType { get; set; }
         public DateTime LeaveTime { get; set; }
         public DateTime EntryTime { get; set; }
+        public int DurationDays { get; set; }
+        public string? status { get; set; } 
+
 
     }
+    
 }

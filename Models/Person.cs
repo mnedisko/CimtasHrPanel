@@ -6,8 +6,9 @@ namespace CimtasHrPanel.Models
         public string PersonName { get; set; }
         public string PersonLastName { get; set; }
         public int DepartmentId { get; set; }
+        public int MaxAnnualLeaveLimit { get; set; } = 20;
         public Department Department { get; set; }
-        public ICollection<LeaveRequest> LeaveRequests { get; set; }
+        public List<LeaveRequest> LeaveHistory { get; set; }
 
         
     }
