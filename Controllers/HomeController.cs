@@ -20,7 +20,7 @@ public class HomeController : Controller
         var persons = _projectDbContext.Persons.Select(p => new PersonModelView
         {
             Name = p.PersonName + " " + p.PersonLastName,
-            Departmant = p.DepartmentId.ToString(),
+            DepartmantName = p.Department.DepartmentName
 
         }).ToList();
         return View(persons);
