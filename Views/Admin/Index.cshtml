@@ -1,5 +1,32 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
-}
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="d-flex flex-row gap-3">
+        <form asp-action="AddDepartment" asp-controller="Admin" method="post">
+            <div class="card p-4 shadow-lg" style="width: 300px">
+                <div class="form-group">
+                    <label for="">Yeni Departman ekle</label>
+                    <input class="form-control" type="text" id="departmentName" placeholder="Departman ismi" name="departmentName">
+                    <br>
+                    <div class="text-center">
+                        <button type="submit">Ekle</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <form asp-action="UpdateMaxAnnuelLeaveLimit" asp-controller="Admin" method=post>
+            <div class="card p-4 shadow-lg" style="width: 300px">
+                <div class="form-group">
+                    <label for="">Maksimum İzin Limitini Güncelle</label>
+                    <input class="form-control" type="text" id="newLimit" placeholder="Yeni limit" name="newLimit">
+                    <br>
+                    <div class="text-center">
+                        <button type="submit">Güncelle</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -12,8 +12,10 @@ namespace CimtasHrPanel.Models
         public DbSet<Department> Departments { get; set; }
         public DbSet<LeaveRequest> LeaveRequests { get; set; }
         public DbSet<LeaveType> LeaveTypes { get; set; }
+        public DbSet<LeaveSettings> LeaveSettings { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<Department>().HasData(
                 new Department { Id = 1, DepartmentName = "Pazarlama" },
                 new Department { Id = 2, DepartmentName = "İnsan kaynakları" },
@@ -35,8 +37,11 @@ namespace CimtasHrPanel.Models
                 new LeaveType { Id = 3, LeaveTypeName = "Ücretsiz İzin", IsIncreaseAnnualValue = false }
             );
             modelBuilder.Entity<LeaveRequest>().HasData(
-                new LeaveRequest { Id=1, PersonId=1, LeaveTypeId=1, LeaveTime= new DateTime(2025,7,1), EntryTime= new DateTime(2025,7,7),DurationDays=7},
-                new LeaveRequest { Id=2, PersonId=2, LeaveTypeId=1, LeaveTime= new DateTime(2025,7,1), EntryTime= new DateTime(2025,7,22),DurationDays=22}
+                new LeaveRequest { Id = 1, PersonId = 1, LeaveTypeId = 1, LeaveTime = new DateTime(2025, 7, 1), EntryTime = new DateTime(2025, 7, 7), DurationDays = 7 },
+                new LeaveRequest { Id = 2, PersonId = 2, LeaveTypeId = 1, LeaveTime = new DateTime(2025, 7, 1), EntryTime = new DateTime(2025, 7, 22), DurationDays = 22 }
+            );
+            modelBuilder.Entity<LeaveSettings>().HasData(
+                new LeaveSettings {Id=1, MaxAnnualLeaveLimit = 20 }
             );
         }
         

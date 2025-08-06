@@ -6,12 +6,10 @@ using Microsoft.Extensions.Options;
 public class LeaveController : Controller
 {
     private readonly ProjectDbContext _projectDbContext;
-    private readonly LeaveSettings _leaveSettings;
 
-    public LeaveController(ProjectDbContext dbContext, IOptions<LeaveSettings> leaveSettings)
+    public LeaveController(ProjectDbContext dbContext)
     {
         _projectDbContext = dbContext;
-        _leaveSettings = leaveSettings.Value;
     }
     public async  Task<IActionResult> LeaveModule(int? departmentId)
     {
@@ -86,6 +84,7 @@ public class LeaveController : Controller
     }
         public async Task<IActionResult> Index(int? departmentId, DateTime? startDate, DateTime? endDate)
     {
+        var settings = await _projectDbContext.LeaveSettings.FirstOrDefaultAsync();
         
         ViewBag.Departments = await _projectDbContext.Departments.ToListAsync();
 
@@ -138,9 +137,9 @@ public class LeaveController : Controller
                 EndDate = request.EntryTime,
                 DurationDays = request.DurationDays,
                 Status = CalcuteLeaveStatus(request.LeaveTime, request.EntryTime),
-                IsOverLeaveUsed = totalAnnualLeaveDays > _leaveSettings.MaxAnnualLeaveLimit,
-                PersonMaxAnnualLeaveLimit = _leaveSettings.MaxAnnualLeaveLimit,
-                PersonTotalAnnualLeaveLimit = _leaveSettings.MaxAnnualLeaveLimit - totalAnnualLeaveDays,
+                IsOverLeaveUsed = totalAnnualLeaveDays > settings.MaxAnnualLeaveLimit,
+                PersonMaxAnnualLeaveLimit = settings.MaxAnnualLeaveLimit ,
+                PersonTotalAnnualLeaveLimit = settings.MaxAnnualLeaveLimit - totalAnnualLeaveDays,
                 
                 
                 
@@ -149,7 +148,6 @@ public class LeaveController : Controller
             result.Add(viewModel);
         }
 
-        // 4. Tarihe göre sırala (en yeni en üstte)
         var sortedResult = result.OrderByDescending(x => x.StartDate).ToList();
 
         return View(sortedResult);
