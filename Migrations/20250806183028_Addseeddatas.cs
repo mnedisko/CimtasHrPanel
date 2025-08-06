@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CimtasHrPanel.Migrations
 {
     /// <inheritdoc />
-    public partial class AddDStatus : Migration
+    public partial class Addseeddatas : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -132,7 +132,11 @@ namespace CimtasHrPanel.Migrations
             migrationBuilder.InsertData(
                 table: "LeaveRequests",
                 columns: new[] { "Id", "DepartmentId", "DurationDays", "EntryTime", "LeaveTime", "LeaveTypeId", "PersonId", "status" },
-                values: new object[] { 1, null, 7, new DateTime(2025, 7, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1, null });
+                values: new object[,]
+                {
+                    { 1, null, 7, new DateTime(2025, 7, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1, null },
+                    { 2, null, 22, new DateTime(2025, 7, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2025, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 2, null }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeaveRequests_DepartmentId",

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CimtasHrPanel")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4a35256f4e0696a899ec7ecd28b74223a894d12d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+46db0dfe992a13fd4f79a3cd4a2cea99cd990f73")]
 [assembly: System.Reflection.AssemblyProductAttribute("CimtasHrPanel")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CimtasHrPanel")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

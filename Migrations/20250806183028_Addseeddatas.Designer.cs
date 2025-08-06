@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CimtasHrPanel.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20250806163043_AddDStatusdds")]
-    partial class AddDStatusdds
+    [Migration("20250806183028_Addseeddatas")]
+    partial class Addseeddatas
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

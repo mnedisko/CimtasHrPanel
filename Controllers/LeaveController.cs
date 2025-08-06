@@ -57,74 +57,94 @@ public class LeaveController : Controller
         return Ok("İzin başarı ile kaydedildi");
     }
     private int CalculateBusinessDays(DateTime leave, DateTime entry)
-{
-    int businessDays = 0;
-    for (var date = leave; date <= entry; date = date.AddDays(1))
     {
-        if (date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday)
+        int businessDays = 0;
+        for (var date = leave; date <= entry; date = date.AddDays(1))
         {
-            businessDays++;
-        }
-    }
-    return businessDays;
-}
-    public async Task<IActionResult> Index(int? departmentId, DateTime? startDate, DateTime? endDate)
-    {
-        ViewBag.Departments = _projectDbContext.Departments.ToList();
-
-        var query = _projectDbContext.LeaveRequests
-            .Include(lr => lr.Person)
-                .ThenInclude(p => p.Department)
-            .Include(lr => lr.LeaveType)
-            .AsQueryable();
-
-        // 1. Departman bazında filtreleme
-        if (departmentId.HasValue && departmentId.Value > 0)
-        {
-            query = query.Where(lr => lr.Person.DepartmentId == departmentId.Value);
-        }
-
-        // 2. Tarih filtresiyle sorgulama
-        if (startDate.HasValue)
-        {
-            query = query.Where(lr => lr.LeaveTime >= startDate.Value);
-        }
-
-        if (endDate.HasValue)
-        {
-            query = query.Where(lr => lr.EntryTime <= endDate.Value);
-        }
-
-        var leaveHistory = await query
-            .Select(lr => new LeaveHistoryViewModel
+            if (date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday)
             {
-                PersonName = $"{lr.Person.PersonName} {lr.Person.PersonLastName}",
-                DepartmentName = lr.Person.Department.DepartmentName,
-                LeaveTypeName = lr.LeaveType.LeaveTypeName,
-                StartDate = lr.LeaveTime,
-                EndDate = lr.EntryTime,
-                DurationDays = lr.DurationDays,
-                Status = lr.status,
-            })
-            .ToListAsync();
-
-        // 3. Aşırı izin kullanımına uyarı (yıllık izin sınırı kontrolü)
-        var annualLeaveLimit = 20; // Parametrik olarak ayarlanabilir
-        foreach (var person in leaveHistory.GroupBy(x => x.PersonName))
-        {
-            var totalAnnualLeave = await _projectDbContext.LeaveRequests
-                .Where(lr => lr.Person.PersonName + " " + lr.Person.PersonLastName == person.Key && lr.LeaveType.IsIncreaseAnnualValue)
-                .SumAsync(lr => lr.DurationDays);
-
-            if (totalAnnualLeave > annualLeaveLimit)
-            {
-                foreach (var leave in leaveHistory.Where(x => x.PersonName == person.Key))
-                {
-                    leave.IsOverLeaveUsed = true;
-                }
+                businessDays++;
             }
         }
+        return businessDays;
+    }
+    private string CalcuteLeaveStatus(DateTime leave, DateTime entry)
+    {
+        string status = "";
+        DateTime today = DateTime.Now;
+        if (today >= leave && today <= entry)
+        {
+            status = "İzinli";
+        }
+        else
+        {
+            status = "İzinli değil";
+        }
+        return status;
+    }
+        public async Task<IActionResult> Index(int? departmentId, DateTime? startDate, DateTime? endDate)
+    {
+        
+        ViewBag.Departments = await _projectDbContext.Departments.ToListAsync();
 
-        return View(leaveHistory);
+        
+        var allLeaveRequests = await _projectDbContext.LeaveRequests
+            .Include(lr => lr.Person)
+            .ThenInclude(p => p.Department)
+            .Include(lr => lr.LeaveType)
+            .ToListAsync();
+
+       
+        var filteredRequests = allLeaveRequests.AsEnumerable();
+
+       
+        if (departmentId.HasValue && departmentId.Value > 0)
+        {
+            filteredRequests = filteredRequests.Where(lr => lr.Person.DepartmentId == departmentId.Value);
+        }
+
+        
+        if (startDate.HasValue)
+        {
+            filteredRequests = filteredRequests.Where(lr => lr.LeaveTime >= startDate.Value);
+        }
+
+       
+        if (endDate.HasValue)
+        {
+            filteredRequests = filteredRequests.Where(lr => lr.EntryTime <= endDate.Value);
+        }
+
+       
+        var leaveRequestsList = filteredRequests.ToList();
+        var result = new List<LeaveHistoryViewModel>();
+
+        foreach (var request in leaveRequestsList)
+        {
+           
+            var totalAnnualLeaveDays = allLeaveRequests
+                .Where(lr => lr.PersonId == request.PersonId && lr.LeaveType.LeaveTypeName == "Yıllık İzin")
+                .Sum(lr => lr.DurationDays);
+
+            
+            var viewModel = new LeaveHistoryViewModel
+            {
+                PersonName = request.Person.PersonName + " " + request.Person.PersonLastName,
+                DepartmentName = request.Person.Department.DepartmentName,
+                LeaveTypeName = request.LeaveType.LeaveTypeName,
+                StartDate = request.LeaveTime,
+                EndDate = request.EntryTime,
+                DurationDays = request.DurationDays,
+                Status = CalcuteLeaveStatus(request.LeaveTime,request.EntryTime),
+                IsOverLeaveUsed = totalAnnualLeaveDays > 20 
+            };
+
+            result.Add(viewModel);
+        }
+
+        // 4. Tarihe göre sırala (en yeni en üstte)
+        var sortedResult = result.OrderByDescending(x => x.StartDate).ToList();
+
+        return View(sortedResult);
     }
 }
