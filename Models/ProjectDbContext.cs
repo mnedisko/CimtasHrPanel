@@ -25,9 +25,12 @@ namespace CimtasHrPanel.Models
             );
             modelBuilder.Entity<Person>().HasData(
                 new Person { Id = 1, PersonName = "Ahmet", PersonLastName = "Yılmaz", DepartmentId = 1 },
-                new Person { Id = 2, PersonName = "Büşra", PersonLastName = "Soy", DepartmentId = 1 },
+                new Person { Id = 2, PersonName = "Büşra", PersonLastName = "Soyadıvar", DepartmentId = 1 },
                 new Person { Id = 3, PersonName = "Kadir", PersonLastName = "Ay", DepartmentId = 2 },
-                new Person { Id = 4, PersonName = "Mehmet", PersonLastName = "Yılmaz", DepartmentId = 3 }
+                new Person { Id = 4, PersonName = "Mehmet", PersonLastName = "Yılmaz", DepartmentId = 3 },
+                new Person { Id = 5, PersonName = "Doğukan", PersonLastName = "Uyar", DepartmentId = 2 },
+                new Person { Id = 6, PersonName = "Selma", PersonLastName = "Yılmaz", DepartmentId = 3 },
+                new Person { Id = 7, PersonName = "Orhan", PersonLastName = "Orhanlılı", DepartmentId = 2 }
 
             );
 

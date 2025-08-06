@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CimtasHrPanel.Migrations
 {
     /// <inheritdoc />
-    public partial class Addseeddatas : Migration
+    public partial class AddLeaveSettings : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,6 +24,19 @@ namespace CimtasHrPanel.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Departments", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LeaveSettings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MaxAnnualLeaveLimit = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LeaveSettings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,6 +122,11 @@ namespace CimtasHrPanel.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "LeaveSettings",
+                columns: new[] { "Id", "MaxAnnualLeaveLimit" },
+                values: new object[] { 1, 20 });
+
+            migrationBuilder.InsertData(
                 table: "LeaveTypes",
                 columns: new[] { "Id", "IsIncreaseAnnualValue", "LeaveTypeName" },
                 values: new object[,]
@@ -126,7 +144,10 @@ namespace CimtasHrPanel.Migrations
                     { 1, 1, 20, "Yılmaz", "Ahmet" },
                     { 2, 1, 20, "Soy", "Büşra" },
                     { 3, 2, 20, "Ay", "Kadir" },
-                    { 4, 3, 20, "Yılmaz", "Mehmet" }
+                    { 4, 3, 20, "Yılmaz", "Mehmet" },
+                    { 5, 2, 20, "Yıldız", "Ayşe" },
+                    { 6, 3, 20, "Yılmaz", "Selma" },
+                    { 7, 2, 20, "Orhanlılı", "Orhan" }
                 });
 
             migrationBuilder.InsertData(
@@ -164,6 +185,9 @@ namespace CimtasHrPanel.Migrations
         {
             migrationBuilder.DropTable(
                 name: "LeaveRequests");
+
+            migrationBuilder.DropTable(
+                name: "LeaveSettings");
 
             migrationBuilder.DropTable(
                 name: "LeaveTypes");

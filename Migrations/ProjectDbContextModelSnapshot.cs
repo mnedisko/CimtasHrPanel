@@ -239,6 +239,30 @@ namespace CimtasHrPanel.Migrations
                             MaxAnnualLeaveLimit = 20,
                             PersonLastName = "Yılmaz",
                             PersonName = "Mehmet"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DepartmentId = 2,
+                            MaxAnnualLeaveLimit = 20,
+                            PersonLastName = "Uyar",
+                            PersonName = "Doğukan Sezer"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DepartmentId = 3,
+                            MaxAnnualLeaveLimit = 20,
+                            PersonLastName = "Yılmaz",
+                            PersonName = "Selma"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            DepartmentId = 2,
+                            MaxAnnualLeaveLimit = 20,
+                            PersonLastName = "Orhanlılı",
+                            PersonName = "Orhan"
                         });
                 });
 

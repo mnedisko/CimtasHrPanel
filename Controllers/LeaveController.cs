@@ -11,14 +11,12 @@ public class LeaveController : Controller
     {
         _projectDbContext = dbContext;
     }
-    public async  Task<IActionResult> LeaveModule(int? departmentId,DateTime? StartDate,DateTime? EndDate)
+    public async  Task<IActionResult> LeaveModule(int? departmentId)
     {
            var viewModel = new LeaveCreateViewModel
            {
                Departments = await _projectDbContext.Departments.ToListAsync(),
-               LeaveTypes = await _projectDbContext.LeaveTypes.ToListAsync(),
-               StartDate = StartDate ?? DateTime.Now,
-               EndDate=EndDate??DateTime.Now,
+               LeaveTypes = await _projectDbContext.LeaveTypes.ToListAsync()
                
 
         };
@@ -34,10 +32,6 @@ public class LeaveController : Controller
         {
             viewModel.Persons = new List<Person>();
         }
-       if (StartDate.HasValue && EndDate.HasValue && StartDate.Value <= EndDate.Value)
-    {
-        viewModel.CalculatedDurationDays = CalculateBusinessDays(StartDate.Value, EndDate.Value);
-    }
 
 
         return View(viewModel);

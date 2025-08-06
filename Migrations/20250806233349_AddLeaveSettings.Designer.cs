@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CimtasHrPanel.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20250806183028_Addseeddatas")]
-    partial class Addseeddatas
+    [Migration("20250806233349_AddLeaveSettings")]
+    partial class AddLeaveSettings
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -119,6 +119,29 @@ namespace CimtasHrPanel.Migrations
                         });
                 });
 
+            modelBuilder.Entity("CimtasHrPanel.Models.LeaveSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("MaxAnnualLeaveLimit")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LeaveSettings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            MaxAnnualLeaveLimit = 20
+                        });
+                });
+
             modelBuilder.Entity("CimtasHrPanel.Models.LeaveType", b =>
                 {
                     b.Property<int>("Id")
@@ -219,6 +242,30 @@ namespace CimtasHrPanel.Migrations
                             MaxAnnualLeaveLimit = 20,
                             PersonLastName = "Yılmaz",
                             PersonName = "Mehmet"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DepartmentId = 2,
+                            MaxAnnualLeaveLimit = 20,
+                            PersonLastName = "Yıldız",
+                            PersonName = "Ayşe"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DepartmentId = 3,
+                            MaxAnnualLeaveLimit = 20,
+                            PersonLastName = "Yılmaz",
+                            PersonName = "Selma"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            DepartmentId = 2,
+                            MaxAnnualLeaveLimit = 20,
+                            PersonLastName = "Orhanlılı",
+                            PersonName = "Orhan"
                         });
                 });
 
