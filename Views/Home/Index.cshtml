@@ -12,6 +12,9 @@
     <a class="btn btn-primary" asp-action="Index" asp-controller="Admin">Admin Panel</a>
     <a class="btn btn-primary" asp-controller="Leave" asp-action="Index">İzin Geçmişi</a>
     <a class="btn btn-primary" asp-controller="Leave" asp-action="LeaveModule">İzin Giriş Modülü</a>
+    <p>İstatistik ekle</p>
+    <p>Toplam izin gününü izin alma sayfasının altına ekle LeaveCalculator</p>
+    <p>Validation ekle</p>
     @if(!PersonList)
     {
         <form method="get">
@@ -36,6 +39,7 @@
                 <tr>
                     <th>Çalışan Adı</th>
                     <th>Departmand Adı</th>
+                    <th></th>
 
                 </tr>
             </thead>
@@ -45,9 +49,15 @@
                     <tr>
                         <td>@person.Name</td>
                         <td>@person.DepartmantName</td>
+                        <td>
+                            <a class="btn btn-danger" asp-controller="Home" asp-action="PersonalData" asp-route-id="@person.PersonId">İstatistik</a>
+                        </td>
+                        <input type="hidden" value="@person.PersonId" />
+
 
 
                     </tr>
+                    
                 }
             </tbody>
         </table>

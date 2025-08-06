@@ -19,11 +19,27 @@ public class HomeController : Controller
     {
         var persons = _projectDbContext.Persons.Select(p => new PersonModelView
         {
+            PersonId=p.Id,
             Name = p.PersonName + " " + p.PersonLastName,
             DepartmantName = p.Department.DepartmentName
 
         }).ToList();
         return View(persons);
+    }
+    public IActionResult PersonalData(int personId)
+    {
+        var person = _projectDbContext.Persons.FirstOrDefault(p => p.Id == personId);
+        if (person==null)
+        {
+            return Ok("Kullanıcı bulunamadı");
+        }
+        var personmw = new PersonModelView
+        {
+            Name = person.PersonName,
+            
+        };
+        
+        return View();
     }
 
     public IActionResult Privacy()
