@@ -124,7 +124,7 @@ public class LeaveController : Controller
         {
            
             var totalAnnualLeaveDays = allLeaveRequests
-                .Where(lr => lr.PersonId == request.PersonId && lr.LeaveType.LeaveTypeName == "Yıllık İzin")
+                .Where(lr => lr.PersonId == request.PersonId && lr.LeaveType.IsIncreaseAnnualValue==true)
                 .Sum(lr => lr.DurationDays);
 
             

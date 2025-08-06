@@ -16,6 +16,21 @@ namespace CimtasHrPanel.Controllers
             return View();
         }
         [HttpPost]
+        public IActionResult AddLeaveType(string leaveTypeName,bool isIncreaseAnnualValue)
+        {
+            var newLeaveType = new LeaveType
+            {
+                LeaveTypeName = leaveTypeName,
+                IsIncreaseAnnualValue = isIncreaseAnnualValue
+
+            };
+            _projectDbContext.LeaveTypes.Add(newLeaveType);
+            _projectDbContext.SaveChanges();
+
+
+            return Ok("Yeni İzin türü başarı ile eklendi");
+        }
+        [HttpPost]
         public IActionResult AddDepartment(string departmentName)
         {
             var newDepartment = new Department
