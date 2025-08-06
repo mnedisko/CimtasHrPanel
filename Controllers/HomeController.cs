@@ -7,15 +7,23 @@ namespace CimtasHrPanel.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly ProjectDbContext _projectDbContext;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, ProjectDbContext projectDbContext)
     {
         _logger = logger;
+        _projectDbContext = projectDbContext;
     }
 
     public IActionResult Index()
     {
-        return View();
+        var persons = _projectDbContext.Persons.Select(p => new PersonModelView
+        {
+            Name = p.PersonName + " " + p.PersonLastName,
+            Departmant = p.DepartmentId.ToString(),
+
+        }).ToList();
+        return View(persons);
     }
 
     public IActionResult Privacy()

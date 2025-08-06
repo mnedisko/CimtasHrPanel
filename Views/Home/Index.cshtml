@@ -1,8 +1,56 @@
-﻿@{
+﻿@model List<CimtasHrPanel.Models.PersonModelView>;
+@{
     ViewData["Title"] = "Home Page";
 }
+@{
+    bool PersonList = Context.Request.Query.ContainsKey("PersonList") && Context.Request.Query["PersonList"] == "true";
 
+
+}
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to Çimtaş HR Panel</h1>
+    <a class="btn btn-primary" asp-action="Index" asp-controller="Admin">Tıkla</a>
+    <a class="btn btn-primary" asp-controller="Leave" asp-action="Index">Leave</a>
+    @if(!PersonList)
+    {
+        <form method="get">
+            <input type="hidden" name="PersonList" value="true" />
+            <button class="btn btn-danger">Listele</button>
+        </form>
+    }
+
+
+    
+
 </div>
+@if(PersonList)
+{
+    <form method="get">
+        <input type="hidden" name="PersonList" value="false" />
+        <button class="btn btn-danger">Listeyi Kapat</button>
+    </form>
+    <div class="text-center">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Çalışan Adı</th>
+                    <th>Departmand Adı</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var person in Model)
+                {
+                    <tr>
+                        <td>@person.Name</td>
+                        <td>@person.Departmant</td>
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+}

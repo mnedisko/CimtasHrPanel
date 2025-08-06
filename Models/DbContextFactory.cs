@@ -7,10 +7,7 @@ public class ProjectDbContextFactory : IDesignTimeDbContextFactory<ProjectDbCont
     public ProjectDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<ProjectDbContext>();
-        
-        // Buraya PostgreSQL bağlantı dizenizi ekleyin.
-        // Bu, `appsettings.json` dosyasındaki ile aynı olmalıdır.
-        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=izin_takip_db;Username=postgres;Password=mysecretpassword");
+        optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=IzinTakipPaneliDb;Trusted_Connection=True;");
 
         return new ProjectDbContext(optionsBuilder.Options);
     }
