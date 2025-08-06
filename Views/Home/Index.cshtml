@@ -50,9 +50,12 @@
                         <td>@person.Name</td>
                         <td>@person.DepartmantName</td>
                         <td>
-                            <a class="btn btn-danger" asp-controller="Home" asp-action="PersonalData" asp-route-id="@person.PersonId">İstatistik</a>
+                            <form asp-action="PersonalData"asp-controller="Home"method="post">
+                                <input type="hidden" name="personId" value="@person.PersonId">
+                                <button type="submit" class="btn btn-sm btn-primary">İstatistik</button>
+                            </form>
                         </td>
-                        <input type="hidden" value="@person.PersonId" />
+                        
 
 
 

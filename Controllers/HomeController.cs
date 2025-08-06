@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using CimtasHrPanel.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CimtasHrPanel.Controllers;
 
@@ -26,20 +27,34 @@ public class HomeController : Controller
         }).ToList();
         return View(persons);
     }
-    public IActionResult PersonalData(int personId)
+    public  async Task<IActionResult> PersonalData(int personId)
     {
-        var person = _projectDbContext.Persons.FirstOrDefault(p => p.Id == personId);
-        if (person==null)
+        var person = await _projectDbContext.Persons
+            .Include(p => p.Department)
+            .Include(p => p.LeaveHistory).ThenInclude(lh=>lh.LeaveType)
+            .FirstOrDefaultAsync(p => p.Id == personId);
+
+    if (person == null)
         {
-            return Ok("Kullanıcı bulunamadı");
+            return NotFound("Kullanıcı bulunamadı.");
         }
+        var annualLeaveLimit = _projectDbContext.LeaveSettings.FirstOrDefault();
+        var totalAnnualLeaveDaysUsed = person.LeaveHistory.Where(lr => lr.LeaveType.IsIncreaseAnnualValue == true).Sum(lr => lr.DurationDays);
         var personmw = new PersonModelView
         {
-            Name = person.PersonName,
+            PersonId = person.Id,
+            Name = person.PersonName + " " + person.PersonLastName,
+            DepartmantName = person.Department.DepartmentName,
+            TotalAnnualLeaveDaysUsed = totalAnnualLeaveDaysUsed,
+            RemainingAnnualLeaveDays = annualLeaveLimit.MaxAnnualLeaveLimit - totalAnnualLeaveDaysUsed,
+             leaveHistory=person.LeaveHistory.OrderByDescending(lh=>lh.LeaveTime).ToList()
+             
+            
+
             
         };
         
-        return View();
+        return View(personmw);
     }
 
     public IActionResult Privacy()

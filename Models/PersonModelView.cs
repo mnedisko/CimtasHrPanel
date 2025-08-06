@@ -8,6 +8,9 @@
         public DateTime LastLeaveDate { get; set; }
         public DateTime LeaveDates { get; set; }
         public bool IsOverLeaveUsed { get; set; }
+        public List<LeaveRequest> leaveHistory { get; set; }
+        public int TotalAnnualLeaveDaysUsed { get; set; }
+        public int RemainingAnnualLeaveDays { get; set; }
 
 
     }
