@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CimtasHrPanel.Models;
-using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.Extensions.Options;
 
 public class LeaveController : Controller
 {
     private readonly ProjectDbContext _projectDbContext;
+    private readonly LeaveSettings _leaveSettings;
 
-    public LeaveController(ProjectDbContext dbContext)
+    public LeaveController(ProjectDbContext dbContext, IOptions<LeaveSettings> leaveSettings)
     {
         _projectDbContext = dbContext;
+        _leaveSettings = leaveSettings.Value;
     }
     public async  Task<IActionResult> LeaveModule(int? departmentId)
     {
@@ -135,8 +137,13 @@ public class LeaveController : Controller
                 StartDate = request.LeaveTime,
                 EndDate = request.EntryTime,
                 DurationDays = request.DurationDays,
-                Status = CalcuteLeaveStatus(request.LeaveTime,request.EntryTime),
-                IsOverLeaveUsed = totalAnnualLeaveDays > 20 
+                Status = CalcuteLeaveStatus(request.LeaveTime, request.EntryTime),
+                IsOverLeaveUsed = totalAnnualLeaveDays > _leaveSettings.MaxAnnualLeaveLimit,
+                PersonMaxAnnualLeaveLimit = _leaveSettings.MaxAnnualLeaveLimit,
+                PersonTotalAnnualLeaveLimit = _leaveSettings.MaxAnnualLeaveLimit - totalAnnualLeaveDays,
+                
+                
+                
             };
 
             result.Add(viewModel);

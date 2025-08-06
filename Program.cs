@@ -1,8 +1,7 @@
 using CimtasHrPanel.Models;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
+builder.Services.Configure<LeaveSettings>(builder.Configuration.GetSection("LeaveSettings"));
 builder.Services.AddControllersWithViews();
 /* builder.Services.AddDbContext(options => options.UseSqlServer("")); */
 builder.Services.AddDbContext<ProjectDbContext>(options =>
