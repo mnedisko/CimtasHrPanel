@@ -18,56 +18,46 @@
                     }
                 </select>
             </div>
-        </form>
-
-        @if (Model.SelectedDepartmentId > 0)
-        {
-            <form asp-action="LeaveModule" asp-controller="Leave" method="post" class="mb-4">
-                <input type="hidden" asp-for="SelectedDepartmentId" />
-
+            
+            @if (Model.SelectedDepartmentId > 0)
+            {
                 <div class="form-group">
-                    <label asp-for="PersonId" class="form-label">Personel</label>
-                    <select asp-for="PersonId" class="form-control">
+                    <label asp-for="PersonId" class="form-label">Personel adı</label>
+                    <select asp-for="PersonId" name="personId" class="form-control" onchange="this.form.submit()">
                         <option value="">Lütfen personel seçiniz</option>
                         @foreach (var person in Model.Persons)
                         {
-                            <option value="@person.Id">@person.PersonName @person.PersonLastName</option>
+                            <option value="@person.Id" selected="@(Model.PersonId == person.Id)">@person.PersonName @person.PersonLastName</option>
                         }
                     </select>
-                    <span asp-validation-for="PersonId" class="text-danger"></span>
                 </div>
+            }
 
-                <div class="form-group">
-                    <label asp-for="LeaveTypeId" class="form-label">İzin Türü</label>
-                    <select asp-for="LeaveTypeId" class="form-control">
-                        <option value="">Lütfen izin türü seçiniz</option>
-                        @foreach (var leaveType in Model.LeaveTypes)
-                        {
-                            <option value="@leaveType.Id">@leaveType.LeaveTypeName</option>
-                        }
-                    </select>
-                    <span asp-validation-for="LeaveTypeId" class="text-danger"></span>
-                </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="form-label">Başlangıç Tarihi</label>
+                <input asp-for="StartDate" type="date" class="form-control" name="StartDate" value="@(Model.StartDate.HasValue ? Model.StartDate.Value.ToString("yyyy-MM-dd") : "")" onchange="this.form.submit()" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
 
-                <div class="form-group">
-                    <label asp-for="StartDate" class="form-label">Başlangıç Tarihi</label>
-                    <input asp-for="StartDate" type="date" class="form-control" />
-                    <span asp-validation-for="StartDate" class="text-danger"></span>
-                </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="form-label">Bitiş Tarihi</label>
+                <input asp-for="EndDate" type="date" class="form-control" name="EndDate" value="@(Model.EndDate.HasValue ? Model.EndDate.Value.ToString("yyyy-MM-dd") : "")" onchange="this.form.submit()" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
 
-                <div class="form-group">
-                    <label asp-for="EndDate" class="form-label">Bitiş Tarihi</label>
-                    <input asp-for="EndDate" type="date" class="form-control" />
-                    <span asp-validation-for="EndDate" class="text-danger"></span>
+            @if (Model.CalculatedDurationDays.HasValue)
+            {
+                <div class="alert alert-info mt-3">
+                    <p>Seçilen tarihler arasındaki toplam iş günü: <strong>@Model.CalculatedDurationDays</strong></p>
                 </div>
-                
-                <br />
-                <div class="text-center">
-                    <button type="submit" class="btn btn-success btn-block">İzin Talebi Oluştur</button>
-                </div>
-            </form>
-
-        }
-        
+            }
+            
+            <input type="hidden" asp-for="LeaveTypeId" />
+            
+            <br />
+            <div class="text-center">
+                <button type="submit" class="btn btn-success btn-block">İzin Talebi Oluştur</button>
+            </div>
+        </form>
     </div>
 </div>
