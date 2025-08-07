@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CimtasHrPanel.Migrations
 {
     /// <inheritdoc />
-    public partial class AddLeaveSettings : Migration
+    public partial class seeddata : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -142,10 +142,10 @@ namespace CimtasHrPanel.Migrations
                 values: new object[,]
                 {
                     { 1, 1, 20, "Yılmaz", "Ahmet" },
-                    { 2, 1, 20, "Soy", "Büşra" },
+                    { 2, 1, 20, "Soyadıvar", "Büşra" },
                     { 3, 2, 20, "Ay", "Kadir" },
                     { 4, 3, 20, "Yılmaz", "Mehmet" },
-                    { 5, 2, 20, "Yıldız", "Ayşe" },
+                    { 5, 2, 20, "Uyar", "Doğukan" },
                     { 6, 3, 20, "Yılmaz", "Selma" },
                     { 7, 2, 20, "Orhanlılı", "Orhan" }
                 });

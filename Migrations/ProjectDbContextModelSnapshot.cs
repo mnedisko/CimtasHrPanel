@@ -221,7 +221,7 @@ namespace CimtasHrPanel.Migrations
                             Id = 2,
                             DepartmentId = 1,
                             MaxAnnualLeaveLimit = 20,
-                            PersonLastName = "Soy",
+                            PersonLastName = "Soyadıvar",
                             PersonName = "Büşra"
                         },
                         new
@@ -246,7 +246,7 @@ namespace CimtasHrPanel.Migrations
                             DepartmentId = 2,
                             MaxAnnualLeaveLimit = 20,
                             PersonLastName = "Uyar",
-                            PersonName = "Doğukan Sezer"
+                            PersonName = "Doğukan"
                         },
                         new
                         {

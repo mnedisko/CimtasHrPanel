@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CimtasHrPanel.Migrations
 {
     [DbContext(typeof(ProjectDbContext))]
-    [Migration("20250806233349_AddLeaveSettings")]
-    partial class AddLeaveSettings
+    [Migration("20250807002704_seeddata")]
+    partial class seeddata
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -224,7 +224,7 @@ namespace CimtasHrPanel.Migrations
                             Id = 2,
                             DepartmentId = 1,
                             MaxAnnualLeaveLimit = 20,
-                            PersonLastName = "Soy",
+                            PersonLastName = "Soyadıvar",
                             PersonName = "Büşra"
                         },
                         new
@@ -248,8 +248,8 @@ namespace CimtasHrPanel.Migrations
                             Id = 5,
                             DepartmentId = 2,
                             MaxAnnualLeaveLimit = 20,
-                            PersonLastName = "Yıldız",
-                            PersonName = "Ayşe"
+                            PersonLastName = "Uyar",
+                            PersonName = "Doğukan"
                         },
                         new
                         {

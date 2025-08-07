@@ -7,7 +7,7 @@ public class ProjectDbContextFactory : IDesignTimeDbContextFactory<ProjectDbCont
     public ProjectDbContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<ProjectDbContext>();
-        optionsBuilder.UseSqlServer("Server=localhost,1433;Database=sql_server;User Id=sa;Password=3280Strongp;Encrypt=False;TrustServerCertificate=True;");
+        optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=IzinTakipPaneliDb;Trusted_Connection=True;");
 
         return new ProjectDbContext(optionsBuilder.Options);
     }
