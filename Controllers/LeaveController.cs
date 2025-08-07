@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using CimtasHrPanel.Models;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 public class LeaveController : Controller
 {
@@ -39,10 +40,22 @@ public class LeaveController : Controller
     //Person name ve person last name birleştir
 
     [HttpPost]
-    public IActionResult LeaveModule(int personId,int leaveTypeId,DateTime StartDate,DateTime EndDate)
+    public async Task<IActionResult> LeaveModule(int personId,int leaveTypeId,DateTime StartDate,DateTime EndDate)
     {
-        var person = _projectDbContext.Persons.FirstOrDefault(p => p.Id == personId);
+     
+     
+         var person = await _projectDbContext.Persons.FirstOrDefaultAsync(p => p.Id == personId);
+         var leaveType = await _projectDbContext.LeaveTypes.FirstOrDefaultAsync(l => l.Id == leaveTypeId);
         /* var leaveTypeName = _projectDbContext.LeaveTypes.FirstOrDefault(l => l.Id == leaveTypeId); */
+        if (person == null)
+        {
+            return BadRequest("Kullanıcı Bulunamadı veya kullanıcı seçmediyseniz lütfen kullanıcı seçiniz");
+        }
+
+        if (leaveType == null)
+        {
+            return BadRequest("İzin türü Seçin");
+        }
 
        var leaveRequest = new LeaveRequest
         {

@@ -8,18 +8,17 @@
 
 }
 <div class="text-center">
-    <h1 class="display-4">Çimtaş İzin Takip Mini Paneline Hoşgeldiniz</h1>
-    <a class="btn btn-primary" asp-action="Index" asp-controller="Admin">Admin Panel</a>
-    <a class="btn btn-primary" asp-controller="Leave" asp-action="Index">İzin Geçmişi</a>
+    <h1 class="display-4">Çimtaş İzin Takip Paneline Hoşgeldiniz</h1>
+    <a class="btn btn-primary" asp-action="Index" asp-controller="Admin">Admin Paneli</a>
+    <a class="btn btn-primary" asp-controller="Leave" asp-action="Index">İzin Geçmişi Listeleme</a>
     <a class="btn btn-primary" asp-controller="Leave" asp-action="LeaveModule">İzin Giriş Modülü</a>
-    <p>İstatistik ekle</p>
-    <p>Toplam izin gününü izin alma sayfasının altına ekle LeaveCalculator</p>
-    <p>Validation ekle</p>
+    <br>
     @if(!PersonList)
     {
+        <br>
         <form method="get">
             <input type="hidden" name="PersonList" value="true" />
-            <button class="btn btn-danger">Listele</button>
+            <button class="btn btn-danger">Tüm personeli listele</button>
         </form>
     }
 
