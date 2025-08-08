@@ -138,14 +138,15 @@ public class LeaveController : Controller
 
         foreach (var request in leaveRequestsList)
         {
-           
+
             var totalAnnualLeaveDays = allLeaveRequests
                 .Where(lr => lr.PersonId == request.PersonId && lr.LeaveType.IsIncreaseAnnualValue==true)
                 .Sum(lr => lr.DurationDays);
 
-            
+
             var viewModel = new LeaveHistoryViewModel
             {
+                LeaveRequestId = request.Id,
                 PersonName = request.Person.PersonName + " " + request.Person.PersonLastName,
                 DepartmentName = request.Person.Department.DepartmentName,
                 LeaveTypeName = request.LeaveType.LeaveTypeName,
@@ -167,5 +168,52 @@ public class LeaveController : Controller
         var sortedResult = result.OrderByDescending(x => x.StartDate).ToList();
 
         return View(sortedResult);
+    }
+
+    public async Task<IActionResult> Edit(int id)
+    {
+        var leaveRequest = await _projectDbContext.LeaveRequests.FindAsync(id);
+        if (leaveRequest == null)
+        {
+            return NotFound();
+        }
+
+        ViewBag.Persons = await _projectDbContext.Persons.ToListAsync();
+        ViewBag.LeaveTypes = await _projectDbContext.LeaveTypes.ToListAsync();
+        return View(leaveRequest);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(int id, int personId, int leaveTypeId, DateTime leaveTime, DateTime entryTime)
+    {
+        var leaveRequest = await _projectDbContext.LeaveRequests.FindAsync(id);
+        if (leaveRequest == null)
+        {
+            return NotFound();
+        }
+
+        leaveRequest.PersonId = personId;
+        leaveRequest.LeaveTypeId = leaveTypeId;
+        leaveRequest.LeaveTime = leaveTime;
+        leaveRequest.EntryTime = entryTime;
+        leaveRequest.DurationDays = CalculateBusinessDays(leaveTime, entryTime);
+        _projectDbContext.LeaveRequests.Update(leaveRequest);
+        await _projectDbContext.SaveChangesAsync();
+
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var leaveRequest = await _projectDbContext.LeaveRequests.FindAsync(id);
+        if (leaveRequest == null)
+        {
+            return NotFound();
+        }
+
+        _projectDbContext.LeaveRequests.Remove(leaveRequest);
+        await _projectDbContext.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 }

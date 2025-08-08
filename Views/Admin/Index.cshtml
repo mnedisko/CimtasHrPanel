@@ -1,53 +1,72 @@
-﻿<body >
-
-    <div class="container d-flex flex-column justify-content-center align-items-center vh-100">
-        <div class="d-flex flex-column flex-md-row gap-3">
-            <form asp-action="AddDepartment" asp-controller="Admin" method="post">
-                <div class="card p-4 shadow-lg" style="width: 300px">
-                    <div class="form-group">
-                        <label for="departmentName">Yeni Departman Ekle</label>
-                        <input class="form-control" type="text" id="departmentName" placeholder="Departman ismi" name="departmentName">
-                        <br>
-                        <div class="text-center">
-                            <button class="btn btn-primary" type="submit">Ekle</button>
-                        </div>
+<div class="container d-flex flex-column justify-content-center align-items-center vh-100">
+    <div class="d-flex flex-column flex-md-row gap-3">
+        <form asp-action="AddDepartment" asp-controller="Admin" method="post">
+            <div class="card p-4 shadow-lg" style="width: 300px">
+                <div class="form-group">
+                    <label for="departmentName">Yeni Departman Ekle</label>
+                    <input class="form-control" type="text" id="departmentName" placeholder="Departman ismi" name="departmentName">
+                    <br>
+                    <div class="text-center">
+                        <button class="btn btn-primary" type="submit">Ekle</button>
                     </div>
                 </div>
-            </form>
+            </div>
+        </form>
 
-            <form asp-action="AddLeaveType" asp-controller="Admin" method="post">
-                <div class="card p-4 shadow-lg" style="width: 300px">
-                    <div class="form-group">
-                        <label for="leaveTypeName">Yeni İzin Türü Ekle</label>
-                        <input class="form-control" type="text" id="leaveTypeName" placeholder="İzin türü ismi" name="leaveTypeName">
-                        <br>
-                        <div class="d-flex justify-content-around">
-                            <label for="leaveTypePaid">Ücretli</label>
-                            <input type="radio" id="leaveTypePaid" name="isIncreaseAnnualValue" value="false" required>
-                            <label for="leaveTypeUnpaid">Ücretsiz</label>
-                            <input type="radio" id="leaveTypeUnpaid" name="isIncreaseAnnualValue" value="true"required>
-                        </div>
-                        <br>
-                        <div class="text-center">
-                            <button class="btn btn-primary" type="submit">Ekle</button>
-                        </div>
+        <form asp-action="AddLeaveType" asp-controller="Admin" method="post">
+            <div class="card p-4 shadow-lg" style="width: 300px">
+                <div class="form-group">
+                    <label for="leaveTypeName">Yeni İzin Türü Ekle</label>
+                    <input class="form-control" type="text" id="leaveTypeName" placeholder="İzin türü ismi" name="leaveTypeName">
+                    <br>
+                    <div class="d-flex justify-content-around">
+                        <label for="leaveTypePaid">Ücretli</label>
+                        <input type="radio" id="leaveTypePaid" name="isIncreaseAnnualValue" value="false" required>
+                        <label for="leaveTypeUnpaid">Ücretsiz</label>
+                        <input type="radio" id="leaveTypeUnpaid" name="isIncreaseAnnualValue" value="true" required>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <button class="btn btn-primary" type="submit">Ekle</button>
                     </div>
                 </div>
-            </form>
+            </div>
+        </form>
 
-            <form asp-action="UpdateMaxAnnuelLeaveLimit" asp-controller="Admin" method="post">
-                <div class="card p-4 shadow-lg" style="width: 300px">
-                    <div class="form-group">
-                        <label for="newLimit">Maksimum İzin Limitini Güncelle</label>
-                        <input class="form-control" type="text" id="newLimit" placeholder="Yeni limit" name="newLimit">
-                        <br>
-                        <div class="text-center">
-                            <button class="btn btn-primary" type="submit">Güncelle</button>
-                        </div>
+        <form asp-action="AddPerson" asp-controller="Admin" method="post">
+            <div class="card p-4 shadow-lg" style="width: 300px">
+                <div class="form-group">
+                    <label for="personName">Personel Ekle</label>
+                    <input class="form-control" type="text" id="personName" placeholder="Ad" name="personName">
+                    <br>
+                    <input class="form-control" type="text" id="personLastName" placeholder="Soyad" name="personLastName">
+                    <br>
+                    <select class="form-control" id="departmentId" name="departmentId">
+                        <option value="">Departman Seçin</option>
+                        @foreach (var dep in ViewBag.Departments)
+                        {
+                            <option value="@dep.Id">@dep.DepartmentName</option>
+                        }
+                    </select>
+                    <br>
+                    <div class="text-center">
+                        <button class="btn btn-primary" type="submit">Ekle</button>
                     </div>
                 </div>
-            </form>
-            
-        </div>
+            </div>
+        </form>
+
+        <form asp-action="UpdateMaxAnnuelLeaveLimit" asp-controller="Admin" method="post">
+            <div class="card p-4 shadow-lg" style="width: 300px">
+                <div class="form-group">
+                    <label for="newLimit">Maksimum İzin Limitini Güncelle</label>
+                    <input class="form-control" type="text" id="newLimit" placeholder="Yeni limit" name="newLimit">
+                    <br>
+                    <div class="text-center">
+                        <button class="btn btn-primary" type="submit">Güncelle</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-</body>
+</div>

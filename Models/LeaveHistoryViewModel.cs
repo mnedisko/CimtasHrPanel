@@ -2,6 +2,7 @@ namespace CimtasHrPanel.Models
 {
     public class LeaveHistoryViewModel
     {
+        public int LeaveRequestId { get; set; }
         public string PersonName { get; set; }
         public string DepartmentName { get; set; }
         public string LeaveTypeName { get; set; }

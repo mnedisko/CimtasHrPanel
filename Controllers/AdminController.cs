@@ -1,4 +1,4 @@
-﻿using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using CimtasHrPanel.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,12 +11,15 @@ namespace CimtasHrPanel.Controllers
         {
             _projectDbContext = projectDbContext;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
+            ViewBag.Departments = await _projectDbContext.Departments.ToListAsync();
             return View();
         }
+
         [HttpPost]
-        public IActionResult AddLeaveType(string leaveTypeName,bool isIncreaseAnnualValue)
+        public IActionResult AddLeaveType(string leaveTypeName, bool isIncreaseAnnualValue)
         {
             var recurringTypeName = _projectDbContext.LeaveTypes.FirstOrDefault(lt => lt.LeaveTypeName == leaveTypeName);
 
@@ -24,7 +27,7 @@ namespace CimtasHrPanel.Controllers
             {
                 return BadRequest("Lütfen izin türünü 3 karakterden fazla tanımlayın");
             }
-            if (recurringTypeName!=null)
+            if (recurringTypeName != null)
             {
                 return BadRequest("bu isimle izin türü daha önce kaydedilmiş");
             }
@@ -37,9 +40,9 @@ namespace CimtasHrPanel.Controllers
             _projectDbContext.LeaveTypes.Add(newLeaveType);
             _projectDbContext.SaveChanges();
 
-
             return Ok("Yeni İzin türü başarı ile eklendi");
         }
+
         [HttpPost]
         public IActionResult AddDepartment(string departmentName)
         {
@@ -61,9 +64,9 @@ namespace CimtasHrPanel.Controllers
             _projectDbContext.Departments.Add(newDepartment);
             _projectDbContext.SaveChanges();
 
-
             return Ok("Departman başarı ile eklendi");
         }
+
         [HttpPost]
         public async Task<IActionResult> UpdateMaxAnnuelLeaveLimit(int newLimit)
         {
@@ -71,7 +74,7 @@ namespace CimtasHrPanel.Controllers
             {
                 return BadRequest("Lütfen 0dan yüksek bir sayı girin");
             }
-            var settings =  _projectDbContext.LeaveSettings.FirstOrDefault();
+            var settings = _projectDbContext.LeaveSettings.FirstOrDefault();
             if (settings != null)
             {
                 settings.MaxAnnualLeaveLimit = newLimit;
@@ -84,6 +87,32 @@ namespace CimtasHrPanel.Controllers
             await _projectDbContext.SaveChangesAsync();
 
             return Ok("Maksimum izin günü ayarı başarı ile değiştirildi");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPerson(string personName, string personLastName, int departmentId)
+        {
+            if (string.IsNullOrWhiteSpace(personName) || string.IsNullOrWhiteSpace(personLastName))
+            {
+                return BadRequest("Lütfen isim ve soyisim girin");
+            }
+
+            var department = await _projectDbContext.Departments.FindAsync(departmentId);
+            if (department == null)
+            {
+                return BadRequest("Departman bulunamadı");
+            }
+
+            var newPerson = new Person
+            {
+                PersonName = personName,
+                PersonLastName = personLastName,
+                DepartmentId = departmentId
+            };
+
+            _projectDbContext.Persons.Add(newPerson);
+            await _projectDbContext.SaveChangesAsync();
+            return Ok("Personel başarı ile eklendi");
         }
     }
 }

@@ -1,0 +1,31 @@
+@model CimtasHrPanel.Models.LeaveRequest
+@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    ViewData["Title"] = "İzin Güncelle";
+}
+<div class="container mt-4">
+    <div class="card shadow p-4">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <div class="mb-3">
+                <label class="form-label">Personel</label>
+                <select class="form-control" name="personId" asp-for="PersonId" asp-items="@(new SelectList(ViewBag.Persons, "Id", "PersonName"))"></select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">İzin Türü</label>
+                <select class="form-control" name="leaveTypeId" asp-for="LeaveTypeId" asp-items="@(new SelectList(ViewBag.LeaveTypes, "Id", "LeaveTypeName"))"></select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Başlangıç Tarihi</label>
+                <input type="date" class="form-control" name="leaveTime" value="@Model.LeaveTime.ToString("yyyy-MM-dd")" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Bitiş Tarihi</label>
+                <input type="date" class="form-control" name="entryTime" value="@Model.EntryTime.ToString("yyyy-MM-dd")" />
+            </div>
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary">Güncelle</button>
+            </div>
+        </form>
+    </div>
+</div>
